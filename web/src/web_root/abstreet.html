@@ -5,6 +5,17 @@
 <body>
 
 <script type="module">
+  // Web 端会把 URL query 用 `&` 分隔当作“命令行参数”传给 Rust(structopt)。
+  // 第一个不以 `--` 开头的参数会被当作地图路径（SimFlags.load_path）。
+  // 如果用户没带任何参数，默认会落到 Seattle/Montlake；这里改成默认加载 Hong Kong / Kowloon。
+  const DEFAULT_MAP_ARG = "system/hk/kowloon/maps/tsim_sha_tsui.bin";
+  if (window.location.search === "" || window.location.search === "?") {
+    const newUrl =
+      window.location.pathname + "?" + DEFAULT_MAP_ARG + window.location.hash;
+    // 不刷新页面，只更新地址栏；保证后续 Rust 读取 window.location.href 时能拿到默认参数
+    window.history.replaceState(null, "", newUrl);
+  }
+
   import { ABStreet } from "./abstreet/abstreet.bundle.js";
   let app = new ABStreet("app");
 
