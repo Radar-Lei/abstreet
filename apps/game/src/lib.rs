@@ -40,12 +40,15 @@ mod sandbox;
 mod ungap;
 
 pub fn main() {
-    let settings = Settings::new("A/B Street");
+    let settings = Settings::new("LLM-enhanced traffic simulation (text-to-simulation)");
     run(settings);
 }
 
 #[derive(StructOpt)]
-#[structopt(name = "abstreet", about = "The A/B Street traffic simulator")]
+#[structopt(
+    name = "abstreet",
+    about = "LLM-enhanced traffic simulation (text-to-simulation)"
+)]
 struct Args {
     #[structopt(flatten)]
     flags: Flags,

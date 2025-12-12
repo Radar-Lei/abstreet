@@ -1830,6 +1830,7 @@ dependencies = [
  "popdat",
  "rand",
  "rand_xorshift",
+ "reqwest",
  "serde",
  "serde_json",
  "sim",

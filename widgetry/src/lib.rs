@@ -63,6 +63,7 @@ pub use crate::widgets::just_draw::DrawWithTooltips;
 pub(crate) use crate::widgets::just_draw::{DeferDraw, JustDraw};
 pub use crate::widgets::line_plot::LinePlot;
 pub use crate::widgets::menu::Menu;
+pub use crate::widgets::multiline_text_box::MultilineTextBox;
 pub use crate::widgets::persistent_split::PersistentSplit;
 pub use crate::widgets::plots::{PlotOptions, Series};
 pub use crate::widgets::scatter_plot::ScatterPlot;

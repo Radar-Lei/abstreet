@@ -29,6 +29,7 @@ pub mod image;
 pub mod just_draw;
 pub mod line_plot;
 pub mod menu;
+pub mod multiline_text_box;
 mod panel;
 pub mod persistent_split;
 pub mod plots;

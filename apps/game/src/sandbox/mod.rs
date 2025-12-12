@@ -32,6 +32,8 @@ use crate::ID;
 
 pub mod dashboards;
 pub mod gameplay;
+#[cfg(not(target_arch = "wasm32"))]
+mod chat;
 mod minimap;
 mod misc_tools;
 mod speed;
@@ -54,6 +56,8 @@ pub struct SandboxControls {
     tool_panel: Option<Panel>,
     pub time_panel: Option<TimePanel>,
     minimap: Option<Minimap<App, MinimapController>>,
+    #[cfg(not(target_arch = "wasm32"))]
+    chatbox: Option<chat::Chatbox>,
 }
 
 impl SandboxMode {
@@ -131,6 +135,20 @@ impl State<App> for SandboxMode {
         // Do this before gameplay
         if self.gameplay.can_move_canvas() && ctx.canvas_movement() {
             URLManager::update_url_cam(ctx, app.primary.map.get_gps_bounds());
+        }
+
+        // Let chatbox consume focused keypresses before gameplay hotkeys run.
+        #[cfg(not(target_arch = "wasm32"))]
+        if let Some(ref mut c) = self.controls.chatbox {
+            c.event(ctx);
+            if let Some(cmd) = c.take_command() {
+                if let Some(ref mut tp) = self.controls.time_panel {
+                    match cmd {
+                        chat::ChatCommand::Pause => tp.pause(ctx, app),
+                        chat::ChatCommand::Resume => tp.resume(ctx, app, SpeedSetting::Realtime),
+                    }
+                }
+            }
         }
 
         let mut actions = self.contextual_actions();
@@ -233,6 +251,10 @@ impl State<App> for SandboxMode {
             }
             if let Some(ref tp) = self.controls.tool_panel {
                 tp.draw(g);
+            }
+            #[cfg(not(target_arch = "wasm32"))]
+            if let Some(ref cb) = self.controls.chatbox {
+                cb.draw(g);
             }
         }
         if let Some(ref tp) = self.controls.time_panel {
@@ -723,6 +745,8 @@ impl SandboxControls {
             } else {
                 None
             },
+            #[cfg(not(target_arch = "wasm32"))]
+            chatbox: Some(chat::Chatbox::new(ctx)),
         }
     }
 
@@ -735,6 +759,10 @@ impl SandboxControls {
         }
         if let Some(ref mut minimap) = self.minimap {
             minimap.recreate_panel(ctx, app);
+        }
+        #[cfg(not(target_arch = "wasm32"))]
+        if let Some(ref mut cb) = self.chatbox {
+            cb.recreate_panel(ctx);
         }
     }
 }
