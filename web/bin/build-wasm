@@ -16,7 +16,7 @@ EOS
 
 if [ $# -eq 0 ]; then
     usage
-    exit1
+    exit 1
 fi
 
 CRATE_NAME="${1}"
