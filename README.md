@@ -1,5 +1,11 @@
 # A/B Street
 
+```
+export DEEPSEEK_API_KEY=sk-b9c929a18b99473788803183b4c49108
+
+RUST_BACKTRACE=1 cargo run --bin game --release
+```
+
 [![DOI](https://zenodo.org/badge/135952436.svg)](https://zenodo.org/badge/latestdoi/135952436)
 [![](https://dcbadge.vercel.app/api/server/nCvMD4xj4K?style=flat)](https://discord.gg/nCvMD4xj4K)
 
