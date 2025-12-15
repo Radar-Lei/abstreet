@@ -38,7 +38,7 @@ impl Chatbox {
         let mut cb = Chatbox {
             panel: Panel::empty(ctx),
             messages: vec![(Role::System, "Chatbox ready.".to_string())],
-            input_prefill: String::new(),
+            input_prefill: "I want to evaluate how different ride-hailing vehicle quotas (from 1,000 to 10,000) affect road traffic congestion in Hong Kong.".to_string(),
             pending_rx: None,
             pending_command: None,
             width_pct: 35,
@@ -128,7 +128,10 @@ impl Chatbox {
         let mut col = Vec::new();
         col.push(
             Widget::row(vec![
-                Line("LLM Chat").small_heading().into_widget(ctx).margin_right(10),
+                Line("LLM Chat (Sylvia's Team)")
+                    .small_heading()
+                    .into_widget(ctx)
+                    .margin_right(10),
                 ctx.style()
                     .btn_plain
                     .text("-")
